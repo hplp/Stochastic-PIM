@@ -13,7 +13,7 @@
 
 class PIM{
     public:
-        void Initialize(int x, int y);
+        void Initialize(int x, int y, float **weights);
         void convolutionFunction(float **pxInput);
         void activationFunction();
         void poolingFunction();

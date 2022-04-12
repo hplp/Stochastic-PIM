@@ -25,7 +25,7 @@ int main(){
     float *px1 = new float[samples];
     for(int i = 0; i < samples; i++){
         time[i] = i*timeStep;
-        px1[i] = sin(2*M_PI*time[i]*fi1);
+        px1[i] = 1;
     }
 
     float **asdm = new float*[3];

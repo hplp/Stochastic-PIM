@@ -52,13 +52,13 @@ int main(){
     asdm2 = ASDM(px2, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples);
     asdm3 = ASDM(px3, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples);
     asdm4 = ASDM(px4, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples);
-    Array *ASDMTest = new Array(1, 5, 100);
+    Array *ASDMTest = new Array(1, 4, 100);
     ASDMTest->Initialization<IdealDevice>();
 
-    ASDMTest->WriteCell(0, 0, -2, 0.8, 1, -1, false);
-    ASDMTest->WriteCell(0, 1, -1, 0.8, 1, -1, false);
-    ASDMTest->WriteCell(0, 2, -1, 0.35, 1, -1, false);
-    ASDMTest->WriteCell(0, 3, -1, 0.15, 1, -1, false);
+    ASDMTest->WriteCell(0, 0, -1, 0.6, 1, -1, false);
+    ASDMTest->WriteCell(0, 1, -1, -0.3, 1, -1, false);
+    ASDMTest->WriteCell(0, 2, -1, 0.45, 1, -1, false);
+    ASDMTest->WriteCell(0, 3, -1, 0.2, 1, -1, false);
     
     float *currents = new float[4];
     for(int i = 0; i < 4; i++){
@@ -84,7 +84,6 @@ int main(){
     }
     float **ASDM_C = new float*[3];
     ASDM_C = ASDM(C_total, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples);
-    
     std::vector<float> dutyCycles = dutyCycle(ASDM_C[0], Toc, timeStep, samples);
     for(int i = 0; i < dutyCycles.size(); i++){
         cout << dutyCycles[i] << endl;
@@ -92,6 +91,8 @@ int main(){
     cout << averageDutyCycle(dutyCycles) << endl;
    // float C_tot = (I_total-(I_min+I_max)/2)/abs(I_max-(I_min+I_max)/2);
     //cout << C_tot << endl;
+    cout << currents[0] << endl;
+
     
     return 0;
 }
