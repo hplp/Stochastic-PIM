@@ -19,6 +19,7 @@ std::vector<std::vector<float>> readWeights(const char* fileName){
         }
 
     }
+  
 
     return weights;
 

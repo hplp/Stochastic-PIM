@@ -1,7 +1,6 @@
 #include "StochasticPIM.h"
 #include <iostream>
 #include <vector>
-#include "Array.h"
 #include <cmath>
 #include "Cell.h"
 #include "ASDM.h"
@@ -21,16 +20,7 @@ float max(float a, float b){
 
 void PIM::Initialize(std::vector<std::vector<float>> weights){
     this->ROW = weights.size();
-    this->COL = weights[0].size();
-    this->Inputs = new Array(this->COL, this->ROW, 100);
-
-    this->Inputs->Initialization<IdealDevice>();
-    for(int i = 0; i < this->COL; i++){
-        for(int j = 0; j < this->ROW; j++){
-            this->Inputs->WriteCell(i, j, -1, weights[j][i], 1, -1, false);
-        }
-    }
-    
+    this->COL = weights[0].size();    
     this->pxAmp = 0.51;
     this->schOutLevel = 1;
     this->schThrPerc = 0.5;
@@ -46,6 +36,19 @@ void PIM::Initialize(std::vector<std::vector<float>> weights){
     this->minConductance = 100e-9;
     this->activationOutput = new float*[this->COL];
     this->convolutionOutput = new float*[this->COL];
+    this->cell = new Cell**[this->COL];
+    for(int i = 0; i < this->COL; i++){
+        this->cell[i] = new Cell*[this->ROW];
+    }
+    
+
+    for(int i = 0; i < this->COL; i++){
+        for(int j = 0; j < this->ROW; j++){
+            this->cell[i][j] = new Cell(this->minConductance, this->maxConductance);
+            this->cell[i][j]->Write(weights[j][i], 1, -1);
+        }
+
+    }
     for(int i = 0; i < this->COL; i++){
         this->convolutionOutput[i] = new float[samples];
     }
@@ -78,9 +81,9 @@ void PIM::convolutionFunction(std::vector<float> pxInput){
     
     for(int i = 0; i < this->COL; i++){
         for(int j = 0; j < this->ROW; j++){
-            currents[i][j] = this->Inputs->ReadCell(i, j, "LSB");
+            currents[i][j] = this->cell[i][j]->Read();
+            
         }
-
     }
 
     float*** streamCurrents = new float**[this->COL];
@@ -128,7 +131,6 @@ void PIM::convolutionFunction(std::vector<float> pxInput){
         this->convolutionOutput[i] = ASDM(C_total[i], this->schThrPerc, this->K, 2*this->pxAmp, this->schOutLevel, this->timeStep, this->samples)[0];
     }
    // std::cout << currents[0][0] << std::endl;
-
 
 
 }

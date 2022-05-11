@@ -8,7 +8,7 @@
 #include <math.h>
 using namespace std;
 int main(){
-    float pxAmp = 1;
+    float pxAmp = 0.51;
     float schOutLevel = 1;
     float schThrPerc = 0.5;
     float schThr = schThrPerc*schOutLevel;
@@ -25,17 +25,14 @@ int main(){
     float *px1 = new float[samples];
     for(int i = 0; i < samples; i++){
         time[i] = i*timeStep;
-        px1[i] = 1;
+        px1[i] = -1;
     }
 
     float **asdm = new float*[3];
     asdm = ASDM(px1, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples);
     std::vector<float> dutyCycles = dutyCycle(asdm[0], Toc, timeStep, samples);
     cout << endl;
-    for(int i = 0; i < dutyCycles.size(); i++){
-        cout << dutyCycles[i] << ',';
-    }
-
+    cout << averageDutyCycle(dutyCycles) << end;
     
     return 0;
 }

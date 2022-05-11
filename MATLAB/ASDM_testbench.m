@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 %- Sigma-Delta parameters(Asynchronous Sigma Delta Modulator)
-pxAmp       = 1;                      %- ASDM Feedback current
+pxAmp       = 0.51;                      %- ASDM Feedback current
 schOutLevel = 1;                      %- Output Voltage
 schThrPerc  = 0.5;                    %- Comparator delta in percentage   
 schThr      = schThrPerc*schOutLevel; %- Comparator delta
@@ -21,7 +21,7 @@ time = (0:timeStep:timeEnd-timeStep);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Generate Streams%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fi1    = 10e3;%- 1st tone frequency                           
-px1    = ones(1, samples).*1; % input to ASDM
+px1    = ones(1, samples).*0; % input to ASDM
 [xStream1, vInt, vError]=ASDM(px1, schThrPerc, K, 2*pxAmp, schOutLevel, timeStep, samples );
 
 

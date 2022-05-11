@@ -2,13 +2,12 @@
 #define STOCHASTICPIM_H_
 #include <iostream>
 #include <vector>
-#include "Array.h"
 #include <cmath>
 #include "Cell.h"
 #include "ASDM.h"
 #include "DutyCycle.h"
 #include "SchmittTrigger.h"
-#include "ASC_ADDER.h"
+#include "ASC_adder.h"
 #include "Activation.h"
 
 class PIM{
@@ -18,7 +17,7 @@ class PIM{
         void activationFunction();
         void poolingFunction();
         void doEverything(std::vector<float> pxInput);
-        Array *Inputs;
+        Cell ***cell;
         float ***asdmGen;
         float *px;
         float pxAmp, schOutLevel, schThrPerc, schThr, foc, Toc, K, timeStep, Fs, timeEnd, maxConductance, minConductance;

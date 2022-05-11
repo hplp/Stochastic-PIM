@@ -38,7 +38,7 @@
 
 #include "formula.h"
 #include "Array.h"
-
+#include <iostream>
 int counter=0;
 double Array::ReadCell(int x, int y, char* mode) {
     // mode is only for the 3T1C cell to select LSB or MSB
@@ -51,7 +51,8 @@ double Array::ReadCell(int x, int y, char* mode) {
 				totalWireResistance = (x + 1) * wireResistanceRow + (arrayRowSize - y) * wireResistanceCol; // do not need to consider the access resistance
             else // Normal
 				totalWireResistance = (x + 1) * wireResistanceRow + (arrayRowSize - y) * wireResistanceCol + static_cast<eNVM*>(cell[x][y])->resistanceAccess;
-		} 
+	
+		} 	
         else 
 			totalWireResistance = (x + 1) * wireResistanceRow + (arrayRowSize - y) * wireResistanceCol;
 		double cellCurrent;
@@ -74,9 +75,13 @@ double Array::ReadCell(int x, int y, char* mode) {
 			if (static_cast<eNVM*>(cell[x][y])->readNoise){
 				extern std::mt19937 gen;
 				cellCurrent = readVoltage / (1/static_cast<eNVM*>(cell[x][y])->conductance * (1 + (*static_cast<eNVM*>(cell[x][y])->gaussian_dist)(gen)) + totalWireResistance);
+			
 			} 
             else
-				cellCurrent = readVoltage / (1/static_cast<eNVM*>(cell[x][y])->conductance + totalWireResistance);
+		
+		
+				cellCurrent = static_cast<eNVM*>(cell[x][y])->conductance;
+			
 		}
 		return cellCurrent;
 	} 
@@ -145,6 +150,7 @@ double Array::ReadCell(int x, int y, char* mode) {
 				} 
                 else{ // No nonlinearity 
 					if (static_cast<eNVM*>(cell[colIndex][y])->readNoise){
+						std::cout << "no this" << std::endl;
 						extern std::mt19937 gen;
 						cellCurrent = readVoltage / (1/static_cast<eNVM*>(cell[colIndex][y])->conductance * (1 + (*static_cast<eNVM*>(cell[colIndex][y])->gaussian_dist)(gen)) + totalWireResistance);
 					} 
@@ -179,6 +185,8 @@ void Array::WriteCell(int x, int y, double deltaWeight, double weight, double ma
 			double conductance = 0;
 			double maxConductance = static_cast<eNVM*>(cell[x][y])->maxConductance;
 			double minConductance = static_cast<eNVM*>(cell[x][y])->minConductance;
+
+
 			conductance = (weight-minWeight)/(maxWeight-minWeight) * (maxConductance - minConductance);
 			if (conductance > maxConductance) 
 				conductance = maxConductance; 

@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Parser.h"
 #include <vector>
-#include "Array.h"
 #include <cmath>
 #include "Cell.h"
 #include "ASDM.h"
@@ -26,17 +25,17 @@ int main(){
     // tested->poolingFunction();
     
 
-    cout << "-- CONVOLUTION -- " << endl;
-    cout << "Duty Cycle for Column 1: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[0], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 2: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[1], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 3: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[2], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 4: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[3], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 5: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[4], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 6: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[5], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 7: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[6], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 8: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[7], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 9: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[8], tested->Toc, tested->timeStep, tested->samples)) << endl;
-    cout << "Duty Cycle for Column 10: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[9], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "-- CONVOLUTION -- " << endl; 
+    // cout << "Duty Cycle for Column1: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[0], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 2: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[1], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 3: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[2], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 4: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[3], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 5: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[4], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 6: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[5], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 7: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[6], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 8: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[7], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 9: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[8], tested->Toc, tested->timeStep, tested->samples)) << endl;
+    // cout << "Duty Cycle for Column 10: " << averageDutyCycle(dutyCycle(tested->convolutionOutput[9], tested->Toc, tested->timeStep, tested->samples)) << endl;
 
     // tested->activationFunction();
     // cout << "-- ACTIVATION -- " << endl;

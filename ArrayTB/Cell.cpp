@@ -209,9 +209,9 @@ IdealDevice::IdealDevice(int x, int y) {
 		//	minConductance = avgMinConductance + (*gaussian_dist_minConductance)(localGen);
 		//} while (minConductance >= maxConductance || maxConductance < 0 || minConductance < 0);
 	}
-	
 	heightInFeatureSize = cmosAccess? 4 : 2;	// Cell height = 4F (Pseudo-crossbar) or 2F (cross-point)
 	widthInFeatureSize = cmosAccess? (FeFET? 6 : 4) : 2;	// Cell width = 6F (FeFET) or 4F (Pseudo-crossbar) or 2F (cross-point)
+	
 }
 
 double IdealDevice::Read(double voltage) {
@@ -413,7 +413,7 @@ void RealDevice::Write(double deltaWeightNormalized, double weight, double minWe
 			writePulseWidthLTD = writeLatencyLTD / (-numPulse);
 		}
 	}
-	
+	std::cout << minConductance << std::endl;
 	conductancePrev = conductance;
 	conductance = conductanceNew;
 }
