@@ -1,4 +1,4 @@
-#include "schmittTrigger.h"
+#include "SchmittTrigger.h"
 float schmittTrigger(float xi, float outim1, float schmittTriggerTresholdPerc, float schmittTriggerOutLevel){
     float sig = xi+outim1*schmittTriggerTresholdPerc;
     int signum;

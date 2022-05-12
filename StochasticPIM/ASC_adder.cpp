@@ -5,7 +5,7 @@
 #include "SchmittTrigger.h"
 using namespace std;
 
-float** ASC_adder(float** x1, int n, float schThrPerc, float K, float feedB, float schOutLevel, float timeStep, float samples){
+float** ASC_adder(float** x1, int n, float schThrPerc, float K, float feedB, float schOutLevel, float timeStep, int samples){
     float schmittTriggerThreshold = schThrPerc * schOutLevel;
     float* vError = new float[samples];
     float* vFeedback = new float[samples];
