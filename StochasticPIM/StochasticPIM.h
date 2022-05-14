@@ -9,6 +9,7 @@
 #include "SchmittTrigger.h"
 #include "ASC_adder.h"
 #include "Activation.h"
+#include "Parameter.h"
 
 class PIM{
     public:
@@ -21,10 +22,10 @@ class PIM{
         float ***asdmGen;
         float *px;
         float pxAmp, schOutLevel, schThrPerc, schThr, foc, Toc, K, timeStep, Fs, timeEnd, maxConductance, minConductance;
-        int samples, COL, ROW;
+        int samples, COL, ROW, averagingWindowSize;
         float** convolutionOutput;
         float** activationOutput;
-        float* poolingOutput;
+        float** poolingOutput;
 
 
 };

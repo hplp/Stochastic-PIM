@@ -8,6 +8,7 @@
 #include "SchmittTrigger.h"
 #include "ASC_adder.h"
 #include "Activation.h"
+#include "Parameter.h"
 
 float max(float a, float b){
     if(a > b){
@@ -19,21 +20,23 @@ float max(float a, float b){
 }
 
 void PIM::Initialize(std::vector<std::vector<float>> weights){
+    InputParameter *param = new InputParameter();
     this->ROW = weights.size();
     this->COL = weights[0].size();    
-    this->pxAmp = 0.51;
-    this->schOutLevel = 1;
-    this->schThrPerc = 0.5;
+    this->averagingWindowSize = param->averagingWindowSize;
+    this->pxAmp = param->pxAmp;
+    this->schOutLevel = param->schOutLevel;
+    this->schThrPerc = param->schThrPerc;
     this->schThr = this->schThrPerc*this->schOutLevel;
-    this->foc = 25e3;
+    this->foc = param->foc;
     this->Toc = 1/this->foc;
     this->K = this->Toc*this->schOutLevel*this->pxAmp/(2*this->schThr);
-    this->timeStep = 10e-9;
+    this->timeStep = param->timeStep;
     this->Fs = 1/this->timeStep;
-    this->timeEnd = 1e-3;
+    this->timeEnd = param->timeEnd;
     this->samples = this->timeEnd/this->timeStep;
-    this->maxConductance = 5e-6;
-    this->minConductance = 100e-9;
+    this->maxConductance = param->maxConductance;
+    this->minConductance = param->minConductance;
     this->activationOutput = new float*[this->COL];
     this->convolutionOutput = new float*[this->COL];
     this->cell = new Cell**[this->COL];
@@ -144,12 +147,28 @@ void PIM::activationFunction(){
 }
 
 void PIM::poolingFunction(){
-    this->poolingOutput = new float[samples];
-    float** ADDER = new float*[3];
-    ADDER = ASC_adder(this->activationOutput, this->COL, this->schThrPerc, this->K, 2*this->pxAmp, this->schOutLevel, this->timeStep, this->samples);
-    this->poolingOutput = ADDER[0];
-    float D_MIN = 0.0098;
-    float D_MAX = .9902;
+    this->poolingOutput = new float*[this->COL];
+    for(int i = 0; i < this->COL; i++){
+        this->poolingOutput[i] = new float[this->samples];
+    }
+    int diff = 0;
+    for(int i = 0; i < this->COL; i++){
+        if(i + this->averagingWindowSize < this->COL){
+            diff = this->averagingWindowSize;
+        }
+        else{
+            diff = this->COL-i;
+        }
+        float** x1 = new float*[diff];
+        for(int i = 0; i < diff; i++){
+            x1[i] = new float[samples];
+        }
+        for(int j = i; j < i+diff; j++){
+            x1[j-i] = this->activationOutput[j];
+        }
+        this->poolingOutput[i] = ASC_adder(x1, diff, this->schThrPerc, this->K, 2*this->pxAmp, this->schOutLevel, this->timeStep, this->samples)[0];
+       
+    }
 }
 
 void PIM::doEverything(std::vector<float> pxInput){
